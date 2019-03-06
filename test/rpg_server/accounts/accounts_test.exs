@@ -6,9 +6,19 @@ defmodule RpgServer.AccountsTest do
   describe "users" do
     alias RpgServer.Accounts.User
 
-    @valid_attrs %{email: "some email", name: "some name", username: "some username"}
-    @update_attrs %{email: "some updated email", name: "some updated name", username: "some updated username"}
-    @invalid_attrs %{email: nil, name: nil, username: nil}
+    @valid_attrs %{
+      email: "some email",
+      name: "some name",
+      username: "some username",
+      password: "some password"
+    }
+    @update_attrs %{
+      email: "some updated email",
+      name: "some updated name",
+      username: "some updated username",
+      password: "some updated password"
+    }
+    @invalid_attrs %{email: nil, name: nil, username: nil, password: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -63,6 +73,65 @@ defmodule RpgServer.AccountsTest do
     test "change_user/1 returns a user changeset" do
       user = user_fixture()
       assert %Ecto.Changeset{} = Accounts.change_user(user)
+    end
+  end
+
+  describe "credentials" do
+    alias RpgServer.Accounts.Credential
+
+    @valid_attrs %{password: "some password"}
+    @update_attrs %{password: "some updated password"}
+    @invalid_attrs %{password: nil}
+
+    def credential_fixture(attrs \\ %{}) do
+      {:ok, credential} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Accounts.create_credential()
+
+      credential
+    end
+
+    test "list_credentials/0 returns all credentials" do
+      credential = credential_fixture()
+      assert Accounts.list_credentials() == [credential]
+    end
+
+    test "get_credential!/1 returns the credential with given id" do
+      credential = credential_fixture()
+      assert Accounts.get_credential!(credential.id) == credential
+    end
+
+    test "create_credential/1 with valid data creates a credential" do
+      assert {:ok, %Credential{} = credential} = Accounts.create_credential(@valid_attrs)
+      assert credential.password_hash == "some password_hash"
+    end
+
+    test "create_credential/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_credential(@invalid_attrs)
+    end
+
+    test "update_credential/2 with valid data updates the credential" do
+      credential = credential_fixture()
+      assert {:ok, %Credential{} = credential} = Accounts.update_credential(credential, @update_attrs)
+      assert credential.password_hash == "some updated password_hash"
+    end
+
+    test "update_credential/2 with invalid data returns error changeset" do
+      credential = credential_fixture()
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_credential(credential, @invalid_attrs)
+      assert credential == Accounts.get_credential!(credential.id)
+    end
+
+    test "delete_credential/1 deletes the credential" do
+      credential = credential_fixture()
+      assert {:ok, %Credential{}} = Accounts.delete_credential(credential)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_credential!(credential.id) end
+    end
+
+    test "change_credential/1 returns a credential changeset" do
+      credential = credential_fixture()
+      assert %Ecto.Changeset{} = Accounts.change_credential(credential)
     end
   end
 end

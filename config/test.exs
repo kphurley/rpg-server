@@ -16,3 +16,8 @@ config :rpg_server, RpgServer.Repo,
   database: "rpg_server_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :argon2_elixir,
+  t_cost: 1,
+  m_cost: 8
+

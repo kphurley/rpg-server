@@ -2,11 +2,14 @@ defmodule RpgServer.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias RpgServer.Accounts.Credential
+
 
   schema "users" do
     field :email, :string
     field :name, :string
     field :username, :string
+    has_one :credential, Credential
 
     timestamps()
   end
