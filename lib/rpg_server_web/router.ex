@@ -7,5 +7,7 @@ defmodule RpgServerWeb.Router do
 
   scope "/api", RpgServerWeb do
     pipe_through :api
+
+    resources "/users", UserController, only: [:create, :show]
   end
 end
