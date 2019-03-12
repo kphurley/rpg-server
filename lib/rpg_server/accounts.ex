@@ -5,8 +5,9 @@ defmodule RpgServer.Accounts do
 
   import Ecto.Query, warn: false
   alias RpgServer.Repo
-
   alias RpgServer.Accounts.{User, Credential}
+  alias RpgServer.Guardian
+
 
   @doc """
   Returns the list of users.
@@ -127,5 +128,36 @@ defmodule RpgServer.Accounts do
     credential
     |> Credential.changeset(attrs)
     |> Repo.update()
+  end
+
+  def token_sign_in(email, password) do
+    case email_password_auth(email, password) do
+      {:ok, user} ->
+        Guardian.encode_and_sign(user)
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  defp email_password_auth(email, password) do
+    query = from(u in User, where: u.email == ^email)
+    query
+    |> Repo.one()
+    |> Repo.preload(:credential)
+    |> verify_password(password)
+  end
+
+  defp verify_password(nil, _) do
+    # Perform a dummy check to make user enumeration more difficult
+    Argon2.no_user_verify()
+    {:error, "Wrong email or password"}
+  end
+
+  defp verify_password(user, password) do
+    if Argon2.verify_pass(password, user.credential.password_hash) do
+      {:ok, user}
+    else
+      {:error, :invalid_password}
+    end
   end
 end
