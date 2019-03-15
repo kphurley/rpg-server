@@ -133,7 +133,8 @@ defmodule RpgServer.Accounts do
   def token_sign_in(email, password) do
     case email_password_auth(email, password) do
       {:ok, user} ->
-        Guardian.encode_and_sign(user)
+        { :ok, token, claims } = Guardian.encode_and_sign(user)
+        { :ok, token, user, claims}
       _ ->
         {:error, :unauthorized}
     end

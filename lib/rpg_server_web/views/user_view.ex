@@ -10,8 +10,8 @@ defmodule RpgServerWeb.UserView do
     %{data: render_one(user, UserView, "user.json")}
   end
 
-  def render("jwt.json", %{jwt: jwt}) do
-    %{jwt: jwt}
+  def render("jwt.json", %{jwt: jwt, user: user}) do
+    %{jwt: jwt, user_id: user.id}
   end
 
   def render("user.json", %{user: user}) do
