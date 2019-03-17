@@ -14,8 +14,8 @@ defmodule RpgServerWeb.Router do
   scope "/api", RpgServerWeb do
     pipe_through :api
 
-    post "/sign_up", UserController, :create
-    post "/sign_in", UserController, :sign_in
+    post "/users", UserController, :create
+    post "/sessions", UserController, :sign_in
   end
 
   scope "/api", RpgServerWeb do

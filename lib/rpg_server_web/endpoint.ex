@@ -40,5 +40,10 @@ defmodule RpgServerWeb.Endpoint do
     key: "_rpg_server_key",
     signing_salt: "ROHqa/Jp"
 
+  plug Corsica,
+    origins: "http://localhost:3000",
+    allow_headers: :all,
+    log: [rejected: :error, invalid: :warn, accepted: :debug]
+
   plug RpgServerWeb.Router
 end
