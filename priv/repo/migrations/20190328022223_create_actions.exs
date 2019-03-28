@@ -10,6 +10,5 @@ defmodule RpgServer.Repo.Migrations.CreateActions do
 
       timestamps()
     end
-
   end
 end

@@ -15,6 +15,8 @@ defmodule RpgServerWeb.ActionView do
       name: action.name,
       range: action.range,
       modifier: action.modifier,
-      order: action.order}
+      order: action.order,
+      type: action.type,
+      status: action.status}
   end
 end

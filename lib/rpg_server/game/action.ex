@@ -2,6 +2,8 @@ defmodule RpgServer.Game.Action do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias RpgServer.Game.Skill
+
   @valid_types [
     "move",
     "attack",
@@ -33,6 +35,8 @@ defmodule RpgServer.Game.Action do
     field :type, :string
     field :status, :string
 
+    belongs_to(:skill, Skill)
+
     timestamps()
   end
 
@@ -43,5 +47,6 @@ defmodule RpgServer.Game.Action do
     |> validate_required([:name, :range, :modifier, :order])
     |> validate_inclusion(:type, @valid_types)
     |> validate_inclusion(:status, @valid_statuses)
+    |> unique_constraint(:name)
   end
 end
