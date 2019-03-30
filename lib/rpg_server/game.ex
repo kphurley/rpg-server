@@ -148,6 +148,7 @@ defmodule RpgServer.Game do
   def create_skill(attrs \\ %{}) do
     %Skill{}
     |> Skill.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:actions, with: &Action.changeset/2)
     |> Repo.insert()
   end
 

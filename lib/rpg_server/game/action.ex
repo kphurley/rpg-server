@@ -35,7 +35,7 @@ defmodule RpgServer.Game.Action do
     field :type, :string
     field :status, :string
 
-    belongs_to(:skill, Skill)
+    belongs_to :skill, Skill
 
     timestamps()
   end

@@ -13,10 +13,7 @@ defmodule RpgServerWeb.SkillController do
 
   def create(conn, %{"skill" => skill_params}) do
     with {:ok, %Skill{} = skill} <- Game.create_skill(skill_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.skill_path(conn, :show, skill))
-      |> render("show.json", skill: skill)
+      conn |> render("skill.json", skill: skill)
     end
   end
 

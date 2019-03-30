@@ -15,6 +15,7 @@ defmodule RpgServerWeb.SkillView do
       name: skill.name,
       initiative: skill.initiative,
       tooltip: skill.tooltip,
-      expertise: skill.expertise}
+      expertise: skill.expertise,
+      actions: skill.actions}
   end
 end
