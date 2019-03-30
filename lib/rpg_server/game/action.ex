@@ -23,7 +23,8 @@ defmodule RpgServer.Game.Action do
     "healing",
     "armored",
     "blocking",
-    "defending"
+    "defending",
+    "empowered"
   ]
 
   schema "actions" do
@@ -43,7 +44,7 @@ defmodule RpgServer.Game.Action do
   @doc false
   def changeset(action, attrs) do
     action
-    |> cast(attrs, [:name, :range, :modifier, :order])
+    |> cast(attrs, [:name, :range, :modifier, :order, :type, :status])
     |> validate_required([:name, :range, :modifier, :order])
     |> validate_inclusion(:type, @valid_types)
     |> validate_inclusion(:status, @valid_statuses)

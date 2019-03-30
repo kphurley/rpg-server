@@ -16,8 +16,6 @@ defmodule RpgServerWeb.Router do
 
     post "/users", UserController, :create
     post "/sessions", UserController, :sign_in
-
-    post "/skills", SkillController, :create
   end
 
   scope "/api", RpgServerWeb do

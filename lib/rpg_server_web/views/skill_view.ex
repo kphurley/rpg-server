@@ -1,6 +1,7 @@
 defmodule RpgServerWeb.SkillView do
   use RpgServerWeb, :view
   alias RpgServerWeb.SkillView
+  alias RpgServerWeb.ActionView
 
   def render("index.json", %{skills: skills}) do
     %{data: render_many(skills, SkillView, "skill.json")}
@@ -16,6 +17,6 @@ defmodule RpgServerWeb.SkillView do
       initiative: skill.initiative,
       tooltip: skill.tooltip,
       expertise: skill.expertise,
-      actions: skill.actions}
+      actions: render_many(skill.actions, ActionView, "action.json")}
   end
 end

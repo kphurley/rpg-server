@@ -6,7 +6,6 @@ defmodule RpgServer.Game.Skill do
 
 
   schema "skills" do
-    field :expertise, :float
     field :initiative, :integer
     field :name, :string
     field :tooltip, :string
@@ -19,7 +18,7 @@ defmodule RpgServer.Game.Skill do
   @doc false
   def changeset(skill, attrs) do
     skill
-    |> cast(attrs, [:name, :initiative, :tooltip, :expertise])
-    |> validate_required([:name, :initiative, :tooltip, :expertise])
+    |> cast(attrs, [:name, :initiative, :tooltip])
+    |> validate_required([:name, :initiative, :tooltip])
   end
 end
