@@ -76,3 +76,4 @@ skill_data = [
 Enum.each(skill_data, fn(data) ->
   Game.create_skill(data)
 end)
+
